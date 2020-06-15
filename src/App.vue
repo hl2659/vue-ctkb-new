@@ -1,10 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <CTKBNavi/>
+<!--    <div id="nav">-->
+<!--      <router-link to="/">Home</router-link>-->
+<!--      <router-link to="/about">About</router-link>-->
+<!--    </div>-->
+
     <router-view/>
+    <CTKBFooter/>
   </div>
 </template>
 
@@ -18,7 +21,7 @@
 }
 
 #nav {
-  padding: 30px;
+  /*padding: 30px;*/
 }
 
 #nav a {
@@ -30,3 +33,10 @@
   color: #42b983;
 }
 </style>
+<script>
+  import CTKBNavi from "./components/common/CTKBNavi";
+  import CTKBFooter from "./components/common/CTKBFooter";
+  export default {
+    components: {CTKBFooter, CTKBNavi}
+  }
+</script>
