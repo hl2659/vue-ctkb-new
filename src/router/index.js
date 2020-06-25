@@ -13,7 +13,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/condition/:condition',
+        path: '/condition',
         name: 'SearchCondition',
         component: SearchCondition
     },

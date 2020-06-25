@@ -14,7 +14,7 @@
                                     <input type="text" id="searchCondition" name="searchCondition"
                                            class="form-control form-control-lg"
                                            placeholder="Please input any conditions..."
-                                            v-model = "condition">
+                                            v-model = 'condition'>
                                 </div>
                                 <div class="col-12 col-md-3">
                                     <button type="submit" id="search" name="search"
@@ -32,18 +32,29 @@
 </template>
 
 <script>
+    import {mapState, mapActions, mapGetters} from 'vuex'
+    import storage from "../../storage/storage";
     export default {
         name: "HomeHeader",
         data() {
-            return {
-                condition: 'Hypertension',
+            return{
+                condition: ''
             }
-
         },
+        computed:{
+            ...mapGetters(['getCondition'])
+            },
         methods: {
+            ...mapActions(['updateCond']),
             toSearch() {
                 console.log(this.condition);
-                this.$router.push({name: 'SearchCondition', params:{condition: this.condition}})
+                if(this.condition.length != 0){
+                    storage.setCondition(this.condition);
+                    console.log("local storage: "+ storage.getCondition());
+                }
+                this.$store.dispatch('updateCond', this.condition);
+                console.log(this.$store.getters.getCondition);
+                this.$router.push({name: 'SearchCondition', params:{condition: this.condition}});
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Navigation -->
-        <nav class="navbar navbar-light bg-light static-top">
+        <nav class="navbar navbar-nav bg-light static-top" >
             <div class="container">
                 <!-- javascript expression using `v-bind` -->
 <!--                <router-link :to="{name: 'Home'}" >Clinical Trial Knowledge Base</router-link>-->

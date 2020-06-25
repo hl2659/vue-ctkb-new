@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex" @click="toCriStats();return false;">
+                            <div class="features-icons-icon d-flex" @click="toCriteriaLib()">
                                 <i class="icon-basket m-auto text-primary"></i>
                             </div>
                             <h3>Criteria Library</h3>
@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex" onclick="toCriteriaLibrary();return false;">
+                            <div class="features-icons-icon d-flex" @click="toConditionLib()">
                                 <i class="icon-calculator m-auto text-primary"></i>
                             </div>
                             <h3>Recruitment Projection</h3>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex" @click="toDquest();return false;">
+                            <div class="features-icons-icon d-flex" @click="toDquest()">
                                 <i class="icon-question m-auto text-primary"></i>
                             </div>
                             <h3>Online Trial Finder</h3>
@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex" @click="toC2q();return false;">
+                            <div class="features-icons-icon d-flex" @click="toC2q()">
                                 <i class="icon-people m-auto text-primary"></i>
                             </div>
                             <h3>Find Patients in your EHR</h3>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex" @click="toCriStats();return false;">
+                            <div class="features-icons-icon d-flex" @click="toCriStats()">
                                 <i class="icon-check m-auto text-primary"></i>
                             </div>
                             <h3>TBD</h3>
@@ -74,6 +74,12 @@
     export default {
         name: "HomeFeatureIcons",
         methods:{
+            toCriteriaLib(){
+                this.$router.push({path:'/criteria'})
+            },
+            toConditionLib(){
+                this.$router.push({path:'/condition'})
+            },
             toDquest(){
                 var url = 'http://impact2.dbmi.columbia.edu/dquest-flask/';
                 window.open(url,'_blank');

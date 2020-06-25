@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="margin: auto">
         <!-- Footer -->
         <footer class="footer bg-light">
             <div class="container">
@@ -22,7 +22,7 @@
                                 <a href="#">Privacy Policy</a>
                             </li>
                         </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; Wenglab  2020. All Rights Reserved.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                         <ul class="list-inline mb-0">
@@ -58,6 +58,7 @@
 
 <style scoped>
     footer.footer {
+        margin: auto;
         padding-top: 4rem;
         padding-bottom: 4rem;
     }
