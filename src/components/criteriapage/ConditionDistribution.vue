@@ -61,7 +61,8 @@
     import 'echarts/theme/sakura'
     import 'echarts/theme/macarons2'
     import axios from "axios";
-    import {mapGetters} from 'vuex'
+    import storage from "../../storage/storage";
+
 
     let initOps = {
         title: {
@@ -112,21 +113,47 @@
         },
         data() {
             return {
-                // criteria:'',
+                criteria: '',
                 inclusionOps: {},
                 exclusionOps: {},
                 initOps: initOps,
             }
         },
+        computed:{
+            criteriaChange(){
+                return this.$store.state.criteriaId;
+            }
+        },
+        watch:{
+            criteriaChange(val, oldVal) {
+                    console.log( 'criteria id updated to: '+val + ' from '+oldVal);
+                    this.criteriaId = this.$store.state.criteriaId;
+                    this.updateData(this.criteriaId, 1);
+                    this.updateData(this.criteriaId, 0);
+                },
+        },
         mounted() {
+            this.criteria = this.getCriteriaId();
             this.updateData(this.criteria, 1);
             this.updateData(this.criteria, 0);
         },
         methods: {
-            ...mapGetters['criteria'],
+            getCriteriaId(){
+                if (!Boolean(this.criteria)) {
+                    this.criteria = this.$store.state.criteriaId;
+                    if(Boolean(this.criteria)){
+                        return this.criteria;
+                    }else{
+                        return storage.get('criteriaId');
+                    }
+                }
+                else{
+                    return this.criteria;
+                }
+            },
             updateData(criteria, include) {
                 console.log(criteria);
-                criteria = '4285271';
+                // criteria = '4285271';
                 var result = -1;
                 console.log("Search Condition by criteria: " + criteria);
                 axios.get(this.$apiUrl + "/common-condition/get-conditions-id/" + criteria + "/" + include)
@@ -138,7 +165,7 @@
                     .catch(function (err) {
                         console.log(err);
 
-                    })
+                    });
                 return result;
 
             },
@@ -150,8 +177,8 @@
                     xAxis_cond_names.push(data[o].conditionConceptName);
                     series_data.push(data[o].totalCount)
                 }
-                console.log(xAxis_cond_names);
-                console.log(series_data);
+                // console.log(xAxis_cond_names);
+                // console.log(series_data);
 
                 if (include == 1) {
                     this.inclusionOps = this.prepareOps(xAxis_cond_names, series_data, include);
@@ -253,7 +280,7 @@
         display: flex;
         flex-flow: row;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
 
     /**

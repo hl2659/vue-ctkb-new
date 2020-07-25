@@ -3,7 +3,7 @@
         <div class="grid-content bg-purple">
             <el-card class="border-dark" style="border-width: 2px">
                 <div>
-                    Criteria Ranking
+                    <strong>Criteria Ranking</strong>
                 </div>
                 <div>
                     123,456
@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        name: "TotalTrials"
+        name: "CriRanking"
     }
 </script>
 

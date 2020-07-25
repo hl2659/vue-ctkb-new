@@ -1,9 +1,9 @@
 <template>
     <div class="summaryPanel">
         <el-row>
-            <TotalTrials/>
-            <InclusionTotal/>
-            <ExclusionTotal/>
+            <TotalTrials :criTotalCount="total_count"/>
+            <InclusionTotal v-on:criInclusionCount="getCriInclusionCount"></InclusionTotal>
+            <ExclusionTotal v-on:criExclusionCount="getCriExclusionCount"/>
             <CriRanking/>
         </el-row>
     </div>
@@ -22,7 +22,30 @@
             InclusionTotal,
             ExclusionTotal,
             CriRanking,
+        },
+        data(){
+            return{
+                inc_count: 0,
+                exc_count: 0,
+                total_count:0,
+            }
+        },
+        methods:{
+            getCriInclusionCount(value){
+                this.inc_count = value;
+                console.log('parent get inc count: '+ this.inc_count);
+                this.getCriTotalCount();
+            },
+            getCriExclusionCount(value){
+                this.exc_count = value;
+                console.log('parent get exc count: '+ this.exc_count);
+                this.getCriTotalCount();
+            },
+            getCriTotalCount(){
+                this.total_count = this.inc_count + this.exc_count;
+            }
         }
+
     }
 </script>
 

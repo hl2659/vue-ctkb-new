@@ -7,17 +7,16 @@ import axios from 'axios'
 export default new Vuex.Store({
     state: {
         condition: '',
-        conditions: [],
+        conditionId: '',
         criteria: '',
         criteriaId: '',
     },
     mutations: {
-
         updateCondition(state, value) {
             state.condition = value;
         },
-        updateConditions(state, value) {
-            state.conditions = value;
+        updateConditionID(state, value) {
+            state.conditionId = value;
         },
         updateCriteria(state, value) {
             state.criteria = value;
@@ -31,8 +30,8 @@ export default new Vuex.Store({
         updateCond({commit}, cond) {
             commit('updateCondition', cond)
         },
-        updateConds({commit}, conds) {
-            commit('updateConditions', conds)
+        updateCondID({commit}, condid) {
+            commit('updateConditionID', condid)
         },
         updateCri({commit}, cri) {
             commit('updateCri', cri)
@@ -45,8 +44,8 @@ export default new Vuex.Store({
         getCondition(state) {
             return state.condition
         },
-        getSearchedConditions(state) {
-            return state.conditions
+        getConditionID(state) {
+            return state.conditionId
         },
         getCriteria(state) {
             return state.criteria

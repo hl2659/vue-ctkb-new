@@ -4,10 +4,10 @@
 
             <el-card class="border-primary" style="border-width: 2px">
                 <div>
-                    Total Trials Used
+                    <strong>Total Trials Used</strong>
                 </div>
                 <div>
-                    123,456
+                    {{Number(criTotalCount).toLocaleString()}}
                 </div>
                 <el-divider >
                     <el-popover placement="top-end" trigger="hover" title="Help" content="Count of individual trials in ClinicalTrials.gov that use this concept as an eligibility criterion (inclusion and/or exclusion)">
@@ -31,6 +31,7 @@
 <script>
     export default {
         name: "TotalTrials",
+        props:{'criTotalCount':[Number, String, Object]}
     }
 </script>
 

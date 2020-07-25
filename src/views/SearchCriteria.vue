@@ -3,6 +3,7 @@
             <CriteriaSearchBox/>
             <SummaryPanel/>
             <ValueDistribution/>
+            <MeasurementValueDis/>
             <ConditionDistribution/>
             <PhaseDistribution/>
     </div>
@@ -14,6 +15,7 @@
     import ValueDistribution from "../components/criteriapage/ValueDistribution";
     import ConditionDistribution from "../components/criteriapage/ConditionDistribution";
     import PhaseDistribution from "../components/criteriapage/PhaseDistribution";
+    import MeasurementValueDis from "../components/criteriapage/MeasurementValueDis";
 
     export default {
         name: "SearchCriteria",
@@ -23,6 +25,7 @@
             ValueDistribution,
             ConditionDistribution,
             PhaseDistribution,
+            MeasurementValueDis,
         }
     }
 </script>

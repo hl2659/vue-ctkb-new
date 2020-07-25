@@ -70,19 +70,42 @@
 
         },
         computed:{
-
+            criteriaChange(){
+                return this.$store.state.criteriaId;
+            }
+        },
+        watch:{
+            criteriaChange(val, oldVal) {
+                console.log( 'phase criteria id updated to: '+val + ' from '+oldVal);
+                this.criteriaId = this.$store.state.criteriaId;
+                this.getPhaseData(this.criteriaId, 1);
+                this.getPhaseData(this.criteriaId, 0);
+            },
         },
         mounted() {
-            this.getPhaseData(0);
-            this.getPhaseData(1);
+            this.criteria = this.getCriteriaId();
+            this.getPhaseData(this.criteria, 0);
+            this.getPhaseData(this.criteria, 1);
 
         },
         methods:{
-            getPhaseData(include){
-                this.criteria = '4285271';
+            getCriteriaId(){
+                if (!Boolean(this.criteria)) {
+                    this.criteria = this.$store.state.criteriaId;
+                    if(Boolean(this.criteria)){
+                        return this.criteria;
+                    }else{
+                        return storage.get('criteriaId');
+                    }
+                }
+                else{
+                    return this.criteria;
+                }
+            },
+            getPhaseData(criteria, include){
 
-                console.log("Search criteria: "+ this.criteria);
-                axios.get(this.$apiUrl+"/common-criteria-stats/criteria-phase/"+ this.criteria +"/"+ include)
+                console.log("Search criteria: "+ criteria);
+                axios.get(this.$apiUrl+"/common-criteria-stats/criteria-phase/"+ criteria +"/"+ include)
                     .then(response => {
                         console.log(response.data);
 
