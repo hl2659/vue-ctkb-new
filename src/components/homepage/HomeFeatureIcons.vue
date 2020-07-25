@@ -57,11 +57,11 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex" @click="toCriStats()">
+                            <div class="features-icons-icon d-flex" @click="toCovid19TrialFinder()">
                                 <i class="icon-check m-auto text-primary"></i>
                             </div>
-                            <h3>TBD</h3>
-                            <p class="lead mb-0">[ Under Development ]</p>
+                            <h3>Covid-19 Trial Finder</h3>
+                            <p class="lead mb-0">Find nearby Covid-19 clinical trials that are relevant to you and looking for patients in the United States</p>
                         </div>
                     </div>
                 </div>
@@ -90,6 +90,10 @@
                 window.open(url,'_blank');
                 // window.location.href = 'http://impact2.dbmi.columbia.edu/dquest-flask/';
             },
+            toCovid19TrialFinder(){
+                var url = 'https://covidtrialx.dbmi.columbia.edu/dquest-flask/';
+                window.open(url,'_blank');
+            }
         }
     }
 </script>
