@@ -31,11 +31,7 @@
                             <el-button :disabled="isDisabled" type="primary" @click="onSubmit">Search</el-button>
                         </el-form-item>
                     </el-form>
-
-
-
             </el-card>
-
 
         </el-container>
 

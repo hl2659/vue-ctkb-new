@@ -1,7 +1,7 @@
 <template>
     <div class="summaryPanel">
         <el-row>
-            <TotalTrials :criTotalCount="total_count"/>
+            <TotalTrials :criTotalCount="total_count" :totalLoading="loading"/>
             <InclusionTotal v-on:criInclusionCount="getCriInclusionCount"></InclusionTotal>
             <ExclusionTotal v-on:criExclusionCount="getCriExclusionCount"/>
             <CriRanking/>
@@ -28,6 +28,7 @@
                 inc_count: 0,
                 exc_count: 0,
                 total_count:0,
+                loading: true,
             }
         },
         methods:{
@@ -43,6 +44,7 @@
             },
             getCriTotalCount(){
                 this.total_count = this.inc_count + this.exc_count;
+                this.loading = false;
             }
         }
 

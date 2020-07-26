@@ -2,7 +2,7 @@
     <el-col :span="6" style="padding-right: 2px">
         <div class="grid-content bg-purple">
 
-            <el-card class="border-primary" style="border-width: 2px">
+            <el-card v-loading="totalLoading" class="border-primary" style="border-width: 2px">
                 <div>
                     <strong>Total Trials Used</strong>
                 </div>
@@ -29,9 +29,30 @@
 </template>
 
 <script>
+    import storage from "../../storage/storage";
     export default {
         name: "TotalTrials",
-        props:{'criTotalCount':[Number, String, Object]}
+        props:{
+            'criTotalCount':[Number, String, Object],
+            'totalLoading': Boolean,
+        },
+        data() {
+            return {
+                totalLoading: true,
+            }
+        },
+        computed:{
+            criteriaChange(){
+                return this.$store.state.criteriaId;
+            },
+        },
+        watch:{
+            criteriaChange(val, oldVal) {
+                console.log( 'criteria id updated to: '+val + ' from '+oldVal);
+                this.totalLoading = true;
+            },
+        },
+
     }
 </script>
 

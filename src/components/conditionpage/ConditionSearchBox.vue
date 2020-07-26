@@ -36,7 +36,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="onSubmit">Search</el-button>
+                            <el-button :disabled="isDisabled" type="primary" @click="onSubmit">Search</el-button>
                         </el-form-item>
                     </el-form>
 
@@ -66,6 +66,7 @@
                 condition:'',
                 conditionId:'',
                 conditionList:[],
+                isDisabled: false,
             }
         },computed:{
             conditionChange(){
@@ -118,6 +119,7 @@
                 };
             },
             handleSelect(item) {
+                this.isDisabled = true;
                 console.log(item.value);
                 this.condition = item.value;
                 this.updateCondition(this.condition);
@@ -127,10 +129,13 @@
                         console.log("got condition id: "+response.data);
                         if (Boolean(response.data)){
                             this.conditionId = response.data;
+
                             // console.log("now criteria id changes to "+this.criteriaId);
                         }
+                        this.isDisabled = false;
                     }).catch(function (err) {
                     console.log(err);
+                    this.isDisabled = false;
                 })
             },
             searchCondition(){

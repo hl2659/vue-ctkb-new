@@ -2,7 +2,7 @@
     <el-row style="width: 80%; flex: auto; margin: auto; padding: 10px">
         <el-col :span="24" style="padding-right: 2px;">
 
-            <el-card v-loading="loading" class="box-card shadow mb-4">
+            <el-card v-loading="loading" v-if="showFlag" class="box-card shadow mb-4">
                 <div slot="header" class="clearfix">
                     <h5 class="m-0 font-weight-bold text-primary">Criteria Value Distribution</h5>
                     <div class="col-auto">
@@ -14,7 +14,7 @@
                 </div>
 
                 <!-- Card Body -->
-                <div v-if="showFlag" class="card-body">
+                <div class="card-body">
                     <div class="chart-area" style="width:1000px;height:550px;left:0px">
                         <v-chart :options="valueOps" :init-options="initOps" theme="infographic" autoresize/>
                     </div>
