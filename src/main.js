@@ -52,7 +52,9 @@ Vue.component('simple-line-icons', SimpleLineIcons)
 Vue.component('v-chart', ECharts)
 
 // register global variables to use
+// dev
 // Vue.prototype.$apiUrl = "http://localhost:8081";
+// production
 Vue.prototype.$apiUrl = "http://34.69.146.90:8081/";
 Vue.config.productionTip = false
 

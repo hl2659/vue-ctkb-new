@@ -191,6 +191,7 @@
             conditionChange(val, oldVal) {
                 console.log( 'condition id updated to: '+val + ' from '+oldVal);
                 this.conditionId = this.$store.state.conditionId;
+                this.conditionName = this.$store.state.condition;
                 console.log('update table to condition id: ' + this.conditionId);
                 this.inloading = true;
                 this.exloading = true;

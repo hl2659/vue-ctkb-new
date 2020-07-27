@@ -38,7 +38,7 @@
         },
         data() {
             return {
-                totalLoading: true,
+                // totalLoading: true,
             }
         },
         computed:{
@@ -49,9 +49,15 @@
         watch:{
             criteriaChange(val, oldVal) {
                 console.log( 'criteria id updated to: '+val + ' from '+oldVal);
-                this.totalLoading = true;
+                this.setLoading(true);
             },
         },
+        methods:{
+            setLoading(value){
+                this.totalLoading = value;
+            }
+
+        }
 
     }
 </script>
