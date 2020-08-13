@@ -46,7 +46,7 @@
                             show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column
-                            prop="conceptCount"
+                            prop="totalCount"
                             label="Frequency"
                             sortable
                             show-overflow-tooltip>
@@ -111,7 +111,7 @@
                             show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column
-                            prop="conceptCount"
+                            prop="totalCount"
                             label="Frequency"
                             sortable
                             show-overflow-tooltip>
