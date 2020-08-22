@@ -1,7 +1,7 @@
 <template>
 
 <!--    <div class="list-group">-->
-        <el-card style="padding: 5px; margin: 10px">
+        <el-card v-loading="loading" style="padding: 5px; margin: 10px">
         <p v-if="criteriaObj.include===1" class="list-group-item list-group-item-success">
             <span class="glyphicon glyphicon-ok"></span>
             <strong> {{criteriaObj.criteriaName}} </strong>
@@ -74,6 +74,7 @@
                 },
                 sum: 0,
                 criteriaRatio: 0.0,
+                loading: true,
             }
         },
         computed:{
@@ -90,7 +91,14 @@
             deleteExcCriteriaObj: function () {
                 this.$emit('deleteExcIndex', this.index)
             },
+            loadingFunction(){
+
+              this.getCriteriaRatio();
+              this.getPhaseCount();
+
+            },
             getPhaseCount(){
+                this.loading = true;
                 console.log("Search criteria id: "+ this.criteriaObj.criteriaId);
                 axios.get(this.$apiUrl+"/common-criteria-stats/criteria-phase/"+ this.criteriaObj.conditionId + "/"+ this.criteriaObj.criteriaId + "/"+ this.criteriaObj.include)
                     .then(response => {
@@ -102,6 +110,7 @@
                         this.criteriaObj.p3 = map['Phase 3'];
                         this.criteriaObj.p4 = map['Phase 4'];
                         this.sum = this.criteriaObj.p1 + this.criteriaObj.p2+ this.criteriaObj.p3+ this.criteriaObj.p4;
+                        this.loading = false;
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -132,10 +141,7 @@
             this.criteriaObj.domain = this.itemC.criteriaDomain;
             this.criteriaObj.conditionName = this.itemC.conditionConceptName;
             this.criteriaObj.conditionId = this.itemC.conditionConceptId;
-
-            this.getPhaseCount();
-            this.getCriteriaRatio();
-
+            this.loadingFunction();
         }
 
 
