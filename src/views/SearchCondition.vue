@@ -17,10 +17,13 @@
                         stripe
                         style="width: 100%"
                         max-height="350"
+                        :row-key="getRowKey"
                         @selection-change="handleIncSelectionChange">
                     <el-table-column
                             type="selection"
-                            width="55">
+                            width="55"
+                            :reserve-selection="true"
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="id"
@@ -82,10 +85,13 @@
                         stripe
                         style="width: 100%"
                         max-height="350"
+                        :row-key="getRowKey"
                         @selection-change="handleExcSelectionChange">
                     <el-table-column
                             type="selection"
-                            width="55">
+                            width="55"
+                            :reserve-selection="true"
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="id"
@@ -147,7 +153,7 @@
 <script>
     import ConditionSearchBox from '../components/conditionpage/ConditionSearchBox'
     import axios from 'axios'
-    import {mapState, mapActions, mapGetters} from 'vuex'
+    import {mapState, mapActions, mapGetters, mapMutations} from 'vuex'
     import storage from "../storage/storage"
 
     export default {
@@ -179,7 +185,6 @@
             this.conditionId = this.getConditionId();
             this.getCriteriaByConditionID(this.conditionId, 1);
             this.getCriteriaByConditionID(this.conditionId, 0);
-
         },
         computed:{
             conditionChange(){
@@ -207,31 +212,44 @@
             }
         },
         methods: {
-            ...mapActions(['updateCond', 'updateCondID']),
+          getRowKey (row) {
+            return row.id
+          },
+          ...mapMutations(['updateCondition','updateConditionID']),
             getRouterData(){
                 const param = this.$route.params;
-                console.log("Param Condition: "+ param.condition) //{condition}
+                if ( param.condition != null && param.conditionId != null){
+                  console.log("Param Condition: "+ param.condition) //{condition}
+                  console.log("Param Condition id: "+ param.conditionId) //{condition}
+                  this.conditionName = param.condition;
+                  this.conditionId = param.conditionId;
+                  storage.set('conditionId', this.conditionId);
+                  storage.set('conditionName', this.conditionName);
+                }
+                return this.conditionId;
             },
             getConditionId(){
                 if (Boolean(this.conditionId)) {
                     console.log("get existing condition id: "+ this.conditionId);
-                    this.updateCondID(this.conditionId);
+                    this.updateConditionID(this.conditionId);
+                    this.updateCondition(this.conditionName);
                     storage.set('conditionId', this.conditionId);
                     console.log('local storage changes to:'+storage.get('conditionId'));
                 }
                 else{
-                    if(Boolean(storage.get('conditionId')) && storage.get('conditionId').length > 0){
+                    if(storage.get('conditionId').length > 0){
                         console.log("get local stored condition id: "+storage.get('conditionId'));
                         this.conditionId = storage.get('conditionId');
                         this.conditionName = storage.get('conditionName');
-                        this.updateCondID(this.conditionId);
+                        this.updateConditionID(this.conditionId);
+                        this.updateCondition(this.conditionName);
                     }else {
                         this.conditionId = '201826';
-                        this.conditionName = 'Type 2 diabetes mellitus';
+                        this.conditionName = 'Diabetes mellitus, Type 2';
                         console.log('set default id to: ' + this.conditionId);
                         console.log('set default condition to: ' + this.conditionName);
-                        this.updateCondID(this.conditionId);
-                        this.updateCond(this.conditionName);
+                        this.updateConditionID(this.conditionId);
+                        this.updateCondition(this.conditionName);
                         storage.set('conditionId', this.conditionId);
                         storage.set('conditionName', this.conditionName);
                         console.log('local storage changes to default: '+storage.get('conditionId'));
@@ -242,6 +260,7 @@
             },
             getCriteriaByConditionID(conditionid, include){
                 console.log("Search condition: "+ conditionid);
+                if(conditionid != null){
                 axios.get(this.$apiUrl+"/common-condition/get-criteria-id/" + conditionid +"/" + include)
                     .then(response => {
                         // console.log(response);
@@ -260,6 +279,7 @@
                     .catch(function (err) {
                         console.log(err);
                     })
+                }
             },
             toggleSelectionInc(rows) {
                 if (rows) {

@@ -11,7 +11,7 @@
 
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div id="box2" class="chart-area">
+                    <div v-loading="loading" id="box2" class="chart-area">
                         <v-chart :options="inclusionChartOps" theme="azul" autoresize/>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
 
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-area">
+                    <div v-loading="loading" class="chart-area">
                         <v-chart :options="exclusionChartOps" theme="macarons" autoresize/>
                     </div>
                 </div>
@@ -63,6 +63,7 @@
                 criteria:'',
                 inclusionChartOps: '',
                 exclusionChartOps: '',
+                loading: false,
 
             }
         },
@@ -103,7 +104,7 @@
                 }
             },
             getPhaseData(criteria, include){
-
+                this.loading = true;
                 console.log("Search criteria: "+ criteria);
                 axios.get(this.$apiUrl+"/common-criteria-stats/criteria-phase/"+ criteria +"/"+ include)
                     .then(response => {
@@ -116,7 +117,7 @@
                         }else{
                             this.exclusionChartOps = this.updateChart(map);
                         }
-
+                        this.loading = false;
                         return map;
                     })
                     .catch(function (err) {

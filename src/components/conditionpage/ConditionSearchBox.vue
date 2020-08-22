@@ -5,7 +5,7 @@
             <el-card style="flex: auto">
 
                 <div style="font-size: 24px; padding: 10px">
-                    <span>Search for a Condition: {{condition}}</span>
+                  <span>Search a condition: <b>{{condition}}</b> </span>
                 </div>
 
 
@@ -13,13 +13,13 @@
 <!--                        <el-form-item label="Please input a Condition:">-->
 <!--                            <el-input v-model="condition" placeholder="e.g. Type 2 diabetes mellitus"></el-input>-->
 <!--                        </el-form-item>-->
-                        <el-form-item label="Please input a condition:">
+                        <el-form-item label="Please input a condition:" >
                             <el-autocomplete
-
+                                    style="width: 300px;"
                                     class="inline-input"
                                     v-model="condition"
                                     :fetch-suggestions="querySearch"
-                                    placeholder="e.g. Type 2 diabetes mellitus"
+                                    placeholder="e.g. Diabetes mellitus, Type 2"
                                     :trigger-on-focus="false"
                                     @select="handleSelect"
                             ></el-autocomplete>
@@ -36,7 +36,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button :disabled="isDisabled" type="primary" @click="onSubmit">Search</el-button>
+                            <el-button :disabled="isDisabled" :loading="isDisabled" type="primary" @click="onSubmit">Search</el-button>
                         </el-form-item>
                     </el-form>
 
@@ -77,8 +77,9 @@
             conditionChange(val, oldVal) {
                 console.log( 'condition id updated to: '+val + ' from '+oldVal);
                 this.conditionId = this.$store.state.conditionId;
-                this.conditionId = this.$store.state.condition;
+                this.condition = this.$store.state.condition;
                 console.log('update condition id to: ' + this.conditionId);
+                console.log('update condition to: ' + this.condition);
             },
         },
         methods: {
@@ -87,7 +88,6 @@
                 this.updateCondition(this.condition);
                 this.updateConditionID(this.conditionId);
                 console.log('submit!' + this.conditionId);
-                this.searchCondition();
             },
             getAllConditionNames(){
                 axios.get(this.$apiUrl+"/common-condition/get-all-condition-names")
@@ -138,44 +138,21 @@
                     this.isDisabled = false;
                 })
             },
-            searchCondition(){
-                if (Boolean(this.conditionId)) {
-                    console.log("get existing condition id: "+ this.conditionId);
-                    this.updateConditionID(this.conditionId);
-                    // this.updateCondition(this.condition);
-                    storage.set('conditionId', this.conditionId);
-                    // storage.set('conditionName', this.condition);
-                    console.log('local storage changes to:'+storage.get('conditionId'));
-                }
-                else{
-                    if(Boolean(storage.get('conditionId')) && storage.get('conditionId').length > 0){
-                        console.log("get local stored condition id: "+storage.get('conditionId'));
-                        this.conditionId = storage.get('conditionId');
-                        this.updateConditionID(this.conditionId);
-                        this.updateCondition(this.condition);
-                    }else {
-                        this.conditionId = '201826';
-                        this.condition = 'Type 2 diabetes mellitus';
-                        console.log('set default id to: ' + this.conditionId);
-                        console.log('set default condition to: ' + this.condition);
-                        this.updateConditionID(this.conditionId);
-                        this.updateCondition(this.condition);
-                        storage.set('conditionId', this.conditionId);
-                        storage.set('conditionName', this.condition);
-                        console.log('local storage changes to default: '+storage.get('conditionId'));
-                        console.log('local storage changes to default: '+storage.get('conditionName'));
-                    }
-                }
-                return this.conditionId;
+          getCondition(){
 
-            },
+              this.condition = this.$store.state.condition;
+              this.conditionId = this.$store.state.conditionId;
+            console.log("In condition search box con id is: "+this.conditionId);
+            console.log("In condition search box con is: "+this.condition);
+          },
         },
         mounted() {
             this.getAllConditionNames();
 
         },
         created() {
-            this.searchCondition();
+          // this.searchCondition();
+          this.getCondition();
         }
     }
 </script>

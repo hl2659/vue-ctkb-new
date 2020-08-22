@@ -1,5 +1,10 @@
 <template>
-    <el-container style="width: 80%; margin: auto; padding: 10px; display: flex; flex-direction: column;">
+    <el-container
+        v-loading="loading"
+        element-loading-text="Loading..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        style="width: 80%; margin: auto; padding: 10px; display: flex; flex-direction: column;">
             <el-header>
 
                 <h4 id="querycondition" style="margin-top: 15px">
@@ -33,7 +38,7 @@
 <!--            <el-button-group style="padding: 40px">-->
                 <!--  <a class="btn btn-info" id="nextstep" role="button" data-toggle="modal" data-target="#myModal">&nbsp;&nbsp;See More&nbsp;&nbsp;</a>-->
         <el-row style="margin-top: 10px; display: flex; margin-left: 30px">
-                <el-button type="success" id="ehrprojection" round style="margin-right: 5px">Estimate Recruitment with EHR</el-button>
+                <el-button type="success" id="ehrprojection" @click="toEHRProjection()" round style="margin-right: 5px">Estimate Recruitment with EHR</el-button>
                 <el-button type="warning" id="download" round style="margin-right: 5px">Download JSON Format</el-button>
                 <el-button type="primary" id="generate" round style="margin-right: 5px">Generate Human Readable Text</el-button>
 <!--            </el-button-group>-->
@@ -44,6 +49,9 @@
 
 <script>
     import SingleCriteria from "../components/criterialistpage/SingleCriteria";
+    import axios from "axios";
+
+    var atlasurl = "http://www.ohdsi.org/web/atlas/";
 
     export default {
         name: "CriteriaList",
@@ -52,7 +60,8 @@
             return {
                 condition:'Testing',
                 inclist:[],
-                exclist:[]
+                exclist:[],
+               loading: false,
             }
         },
         methods:{
@@ -70,6 +79,60 @@
                 this.exclist.splice(index, 1);
                 // console.log('deleted: ', JSON.stringify(this.exclist));
             },
+            toEHRProjection(){
+              this.loading= true;
+              var criList = this.inclist.concat(this.exclist);
+              axios({
+                headers: {
+                  'Content-Type': 'application/json;'
+                },
+                method: 'post',
+                url: this.$apiUrl+"/function/cohortdef/",
+                transformRequest: [function (data) {
+                  // 对 data 进行任意转换处理
+                  return JSON.stringify(data);
+                }],
+                data: {
+                  "cTerm": this.$store.state.condition,
+                  "cId": this.$store.state.conditionId,
+                  "criList": criList,
+                },
+              }).then(response => {
+                this.loading=false;
+                console.log("Testing Atlas");
+                console.log(response.data);
+                window.open(atlasurl + "#/cohortdefinition/" + response.data['cohortId']);
+
+                // var map = response.data;
+                // this.criteriaObj.p1 = map['Phase 1'];
+                // this.criteriaObj.p2 = map['Phase 2'];
+                // this.criteriaObj.p3 = map['Phase 3'];
+                // this.criteriaObj.p4 = map['Phase 4'];
+                // this.sum = this.criteriaObj.p1 + this.criteriaObj.p2+ this.criteriaObj.p3+ this.criteriaObj.p4;
+                this.loading = false;
+              }).catch(function (err) {
+                    console.log(err);
+                    return -1;
+                  })
+
+              // axios.post(this.$apiUrl+"/function/cohortdef/", criList)
+              //     .then(response => {
+              //       console.log(response.data);
+              //
+              //       var map = response.data;
+              //       this.criteriaObj.p1 = map['Phase 1'];
+              //       this.criteriaObj.p2 = map['Phase 2'];
+              //       this.criteriaObj.p3 = map['Phase 3'];
+              //       this.criteriaObj.p4 = map['Phase 4'];
+              //       this.sum = this.criteriaObj.p1 + this.criteriaObj.p2+ this.criteriaObj.p3+ this.criteriaObj.p4;
+              //       this.loading = false;
+              //     })
+              //     .catch(function (err) {
+              //       console.log(err);
+              //       return -1;
+              //     })
+
+          }
         },
         created() {
             this.getList();

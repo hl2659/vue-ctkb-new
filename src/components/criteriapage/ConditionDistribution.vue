@@ -15,7 +15,7 @@
 
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-area" style="width:1000px;height:550px;left:0px">
+                    <div v-loading="loading" class="chart-area" style="width:1000px;height:550px;left:0px">
                         <v-chart :options="inclusionOps" :init-options="initOps" theme="azul" autoresize/>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
 
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-area" style="width:1000px;height:550px;left:0px">
+                    <div v-loading="loading" class="chart-area" style="width:1000px;height:550px;left:0px">
                         <v-chart :options="exclusionOps" :init-options="initOps" theme="macarons2" autoresize/>
                     </div>
                 </div>
@@ -117,6 +117,7 @@
                 inclusionOps: {},
                 exclusionOps: {},
                 initOps: initOps,
+                loading: false,
             }
         },
         computed:{
@@ -152,6 +153,7 @@
                 }
             },
             updateData(criteria, include) {
+              this.loading = true;
                 console.log(criteria);
                 // criteria = '4285271';
                 var result = -1;
@@ -161,6 +163,8 @@
                         // console.log(response.data);
                         result = response.data;
                         this.updateChart(criteria, include, result);
+                      this.loading = false;
+
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -175,7 +179,7 @@
 
                 for (var o in data) {
                     xAxis_cond_names.push(data[o].conditionConceptName);
-                    series_data.push(data[o].totalCount)
+                    series_data.push(data[o].conceptCount)
                 }
                 // console.log(xAxis_cond_names);
                 // console.log(series_data);

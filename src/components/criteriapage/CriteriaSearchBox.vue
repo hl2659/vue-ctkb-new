@@ -13,7 +13,7 @@
 
                         <el-form-item label="Please input a criterion:">
                             <el-autocomplete
-
+                                    style="width: 400px;"
                                     class="inline-input"
                                     v-model="criteriaName"
                                     :fetch-suggestions="querySearch"
@@ -28,7 +28,7 @@
 <!--                        </el-form-item>-->
 
                         <el-form-item>
-                            <el-button :disabled="isDisabled" type="primary" @click="onSubmit">Search</el-button>
+                            <el-button :disabled="isDisabled" :loading="isDisabled" type="primary" @click="onSubmit">Search</el-button>
                         </el-form-item>
                     </el-form>
             </el-card>
@@ -104,6 +104,7 @@
                 console.log("search criteria id: "+ this.criteriaId);
                 if (Boolean(this.criteriaId)) {
                     this.updateCriteriaID(this.criteriaId);
+                    this.updateCriteria(this.criteriaName);
                     storage.set('criteriaId', this.criteriaId);
                     console.log('local storage changes to:'+storage.get('criteriaId'));
                 }
@@ -111,10 +112,12 @@
                     if(Boolean(storage.get('criteriaId')) && storage.get('criteriaId').length > 0){
                         console.log('get criteria id from local storage: '+storage.get('criteriaId'));
                         this.updateCriteriaID(storage.get('criteriaId'));
+                        this.updateCriteria(storage.get('criteriaName'));
                         this.criteriaId = storage.get('criteriaId');
+                        this.criteriaName = storage.get('criteriaName');
                     }else{
                         this.criteriaId = '3038553';
-                        this.criteriaName = 'Body mass index (BMI)';
+                        this.criteriaName = 'BMI';
                         console.log('set default id to: '+ this.criteriaId);
                         this.updateCriteriaID(this.criteriaId);
                         this.updateCriteria(this.criteriaName);
