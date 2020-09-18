@@ -39,7 +39,7 @@
                 <!--  <a class="btn btn-info" id="nextstep" role="button" data-toggle="modal" data-target="#myModal">&nbsp;&nbsp;See More&nbsp;&nbsp;</a>-->
         <el-row style="margin-top: 10px; display: flex; margin-left: 30px">
                 <el-button type="success" id="ehrprojection" @click="toEHRProjection()" round style="margin-right: 5px">Estimate Recruitment with EHR</el-button>
-                <el-button type="warning" id="download" round style="margin-right: 5px">Download JSON Format</el-button>
+                <el-button type="warning" id="download" round style="margin-right: 5px" @click="downloadJson()">Download JSON Format</el-button>
                 <el-button type="primary" id="generate" round style="margin-right: 5px">Generate Human Readable Text</el-button>
 <!--            </el-button-group>-->
         </el-row>
@@ -132,6 +132,16 @@
               //       return -1;
               //     })
 
+          },
+          downloadJson(){
+            var criList = this.inclist.concat(this.exclist);
+            const data = JSON.stringify(criList);
+            const blob = new Blob([data], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = "criteria_list.json";
+            link.click();
+            URL.revokeObjectURL(link.href);
           }
         },
         created() {

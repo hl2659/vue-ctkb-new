@@ -88,6 +88,7 @@
                 this.updateCondition(this.condition);
                 this.updateConditionID(this.conditionId);
                 console.log('submit!' + this.conditionId);
+                this.$emit('childObj', this.conditionId, this.domain);
             },
             getAllConditionNames(){
                 axios.get(this.$apiUrl+"/common-condition/get-all-condition-names")

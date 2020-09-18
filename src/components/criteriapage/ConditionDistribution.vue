@@ -247,8 +247,8 @@
                     dataZoom: [
                         {
                             show: true,
-                            start: 0,
-                            end: 5
+                            start: 10,
+                            end: 90
                         },
                         {
                             type: 'inside',
