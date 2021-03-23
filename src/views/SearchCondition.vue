@@ -1,5 +1,8 @@
 <template>
   <div style="width: 80%; flex: auto; margin: auto; padding: 10px">
+    <div style="font-size: 32px; padding: 10px">
+      <span><b>Cohort Definition</b> </span>
+    </div>
 
     <ConditionSearchBox v-on:childObj="childObj"/>
 

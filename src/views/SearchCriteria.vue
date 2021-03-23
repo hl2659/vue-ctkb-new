@@ -1,11 +1,15 @@
 <template>
+
     <div style="width:80%; margin: auto">
-            <CriteriaSearchBox/>
-            <SummaryPanel/>
-            <ValueDistribution/>
-            <MeasurementValueDis/>
-            <ConditionDistribution/>
-            <PhaseDistribution/>
+          <div style="font-size: 32px; padding: 10px">
+            <span><b>Criteria Summary</b> </span>
+          </div>
+          <CriteriaSearchBox/>
+          <SummaryPanel/>
+          <ValueDistribution/>
+          <MeasurementValueDis/>
+          <ConditionDistribution/>
+          <PhaseDistribution/>
     </div>
 </template>
 
