@@ -9,7 +9,7 @@
                             <div class="features-icons-icon d-flex" @click="toCriteriaLib()">
                                 <i class="icon-basket m-auto text-primary"></i>
                             </div>
-                            <h3>Criteria Library</h3>
+                            <h3>Criteria Summary</h3>
                             <p class="lead mb-0">Support your design of eligibility criteria using historical data from over
                                 200,000 trials</p>
                         </div>
@@ -19,9 +19,8 @@
                             <div class="features-icons-icon d-flex" @click="toConditionLib()">
                                 <i class="icon-calculator m-auto text-primary"></i>
                             </div>
-                            <h3>Recruitment Projection</h3>
-                            <p class="lead mb-0">Leverage our entire Knowledge Base to ensure the fastest possible patient
-                                recruitment</p>
+                            <h3>Cohort Definition</h3>
+                            <p class="lead mb-0">Leverage our entire Knowledge Base to define patient cohort</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
